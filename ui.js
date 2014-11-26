@@ -2,6 +2,7 @@
   var recentMoviesTemplate = Handlebars.compile($("#movies-table-template").html());
   var $tableBody = $("table").find("tbody");
   var movies = [];
+  var sortAsc = true;
 
   var addIndexes = function(value, index) {
       value["index"] = index;
@@ -24,6 +25,7 @@
 
     $tableBody.empty();
     displayMovies(sortedMovies);
+    sortAsc = !sortAsc;
   }
 
   $("#recent-movies").on("click", "th", sortCallback);
@@ -31,10 +33,10 @@
   var sortBy = function(field, array) {
    return array.sort(function(a,b){
       if (a[field] > b[field]) {
-        return 1;
+        return sortAsc ? 1 : -1;
       }
       if (a[field] < b[field]) {
-        return -1;
+        return sortAsc ? -1 : 1;
       }
       // a must be equal to b
       return 0;
