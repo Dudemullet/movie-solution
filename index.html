@@ -19,13 +19,14 @@
   </table>
   <script id="movies-table-template" type="text/x-handlebars-template">
     {{#each movie}}
-      <tr class="movie">
+      <tr class="movie" data-id="{{index}}">
         <td>{{title}}</td>
         <td>{{release_date}}</td>
         <td>{{vote_average}}</td>
       </tr>
     {{/each}}
   </script>
+
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
   <script src="api.js"></script>
