@@ -1,12 +1,11 @@
 (function(){
-  var movies = [];
-
+  var recentMoviesTemplate = Handlebars.compile($("#movies-table-template").html());
+  var $table = $("table");
 
   var displayMovies = function(data) {
     var movies = data.results;
-    movies.forEach(function(v){
-      console.log(v);
-    });
+    var moviesHTML = recentMoviesTemplate({movie: movies});
+    $table.find("tbody").append(moviesHTML);
   }
 
   API.getLatestMovies(displayMovies);
