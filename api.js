@@ -9,8 +9,8 @@ window.API = (function(){
   }
 
   return {
-    getLatest:getLatest,
-    api:api,
-    key:key
+    getLatestMovies: getLatest,
+    api: api,
+    key: key
   }
 })()
