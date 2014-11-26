@@ -1,6 +1,6 @@
 (function(){
   var recentMoviesTemplate = Handlebars.compile($("#movies-table-template").html());
-  var $table = $("table");
+  var $tableBody = $("table").find("tbody");
   var movies = [];
 
   var addIndexes = function(value, index) {
@@ -8,20 +8,25 @@
       return value;
   }
 
-  var displayMovies = function(data) {
+  var normalizeData = function(data) {
     movies = data.results;
     movies = movies.map(addIndexes);
-    var moviesHTML = recentMoviesTemplate({movie: movies});
-    $table.find("tbody").append(moviesHTML);
   }
 
-  $("#recent-movies").on("click", "th", function(e){
+  var displayMovies = function(movies) {
+    var moviesHTML = recentMoviesTemplate({movie: movies});
+    $tableBody.append(moviesHTML);
+  }
+
+  var sortCallback = function(e){
     var sortField = $(this).data("sort");
     var sortedMovies = sortBy(sortField, movies);
 
-    // display These
-    console.log(sortedMovies);
-  });
+    $tableBody.empty();
+    displayMovies(sortedMovies);
+  }
+
+  $("#recent-movies").on("click", "th", sortCallback);
 
   var sortBy = function(field, array) {
    return array.sort(function(a,b){
@@ -36,6 +41,9 @@
     });
   }
 
-  API.getLatestMovies(displayMovies);
+  API.getLatestMovies(function(data){
+    normalizeData(data);
+    displayMovies(movies);
+  });
 
 })()
